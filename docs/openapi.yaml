@@ -1,0 +1,342 @@
+openapi: 3.1.1
+info:
+  title: PDFShift API
+  summary: Documentation for the PDFShift API
+  description: Documentation for the PDFShift API
+  version: 1.0.0
+servers:
+  - url: https://api.pdfshift.io/v3
+paths:
+  /convert/pdf:
+    post:
+      description: Converts a HTML document to PDF
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - source
+              properties:
+                source:
+                  type: string
+                  description: >-
+                    Original document to convert to PDF. PDFShift will
+                    automatically detect if it's an URL and load it, or an HTML
+                    document and charge it.
+                    You can also send an array of documents to convert if
+                    parallel conversions is enabled on your account. In that
+                    case, you will also need to provide the webhook parameters
+                    as this operation is asynchronous.
+                sandbox:
+                  type: boolean
+                  description: >-
+                    Will generates documents that doesn't count in the credits.
+                    The generated document will come with a watermark and you
+                    are limited to 10 documents per minutes.
+                encode:
+                  type: boolean
+                  description: >-
+                    Will return the generated PDF in Base64 encoded format,
+                    instead of raw.
+                filename:
+                  type: string
+                  description: >-
+                    Name of the destination file. Only an alphanumerical value
+                    with \"-\" or \"_\", of at least 7 chars accepted. If given,
+                    the response will not be the PDF, but a JSON response
+                    containing an url parameter to an Amazon S3 bucket, to
+                    download the file. The file will be kept for 2 days, then
+                    automatically deleted.
+                webhook:
+                  type: string
+                  description: >-
+                    An URL where we will send a POST request containing a JSON
+                    body similar to when you use the filename parameter. The
+                    JSON response will contain a URL key that points to your
+                    file, stored on Amazon S3.
+                s3_destination:
+                  type: string
+                  description: >-
+                    Path to your S3 bucket, in order to save the converted PDF
+                    directly into your AWS S3 account.
+                  example: s3://doc-example-bucket/pdfshift/upload/86aa3ede7d05.pdf
+                timeout:
+                  type: integer
+                  description: >-
+                    If provided, will kill the page loading at a specified time
+                    without stopping with a TimeoutError. Value in seconds.
+                wait_for:
+                  type: string
+                  description: >-
+                    Name of a function available globally. When present,
+                    PDFShift will wait for this function to return a truthy
+                    value (true, 1, a string, etc) or up to 30 seconds, then
+                    proceed to the conversion. If the function never returns a
+                    truthy value in the allocated time, the conversion will fail
+                    with an error.
+                landscape:
+                  type: boolean
+                  description: Will set the view in landscape mode instead of portrait.
+                lazy_load_images:
+                  type: boolean
+                  description: Will load images that are otherwise only loaded when they are visible.
+                css:
+                  type: string
+                  description: >-
+                    Will append this CSS styles to the document before saving
+                    it. Can be an URL or a String of CSS rules.
+                javascript:
+                  type: string
+                  description: >-
+                    Will execute the given Javascript before saving the document. Can be an URL or a String of JS code.
+                disable_javascript:
+                  type: boolean
+                  description: Will not execute the javascript at all in the document.
+                disable_backgrounds:
+                  type: boolean
+                  description: The final document will not have the background images.
+                remove_blank:
+                  type: boolean
+                  description: Remove the last page if it is considered empty.
+                delay:
+                  type: integer
+                  description: >-
+                    In milliseconds. Will wait for this duration before capturing the document. Up to 10 seconds max.
+                raise_for_status:
+                  type: boolean
+                  description: >-
+                    Will stop the conversion if the status_code from the given source is not 2XX. Default is False
+                use_print:
+                  type: boolean
+                  description: Use the print stylesheet instead of the general one.
+                format:
+                  type: string
+                  description: >-
+                    Format of the document. You can either use the standard
+                    values (Letter, Legal, Tabloid, Ledger, A0, A1, A2, A3, A4,
+                    A5) or a custom {width}x{height} value. For {width} and
+                    {height}, you can indicate the following units: in, cm, mm.
+                pages:
+                  type: string
+                  description: >-
+                    Pages to print. Can be one number (3), a range (1-5), a list
+                    (4,5,6) or a combination of both (1-3,6,7). If the number is
+                    higher than the real number of pages, that number will be
+                    ignored.
+                zoom:
+                  type: integer
+                  description: >-
+                    A value between 0 and 2. Allows you to increase the zoom in
+                    the document for specific purposes. 1 is the default zoom,
+                    lower is smaller, higher is bigger.
+                is_gdpr:
+                  type: boolean
+                  description: >-
+                    Defaults to false. (Identical to `is_hipaa`). If set to true,
+                    it will ensure that the request will be refused if a
+                    property such as filename or webhook is provided, to avoid
+                    saving the document on PDFShift servers.
+                is_hipaa:
+                  type: boolean
+                  description: >-
+                    Defaults to false. (Identical to is_gdpr). If set to true,
+                    it will ensure that the request will be refused if a
+                    property such as filename or webhook is provided, to avoid
+                    saving the document on PDFShift servers.
+                margin:
+                  type: object
+                  description: Empty spaces between the outer and the beginning of the content.
+                  schema:
+                    properties:
+                      top:
+                        type: string
+                        description: Space between the top and the content.
+                      right:
+                        type: string
+                        description: Space between the right and the content.
+                      bottom:
+                        type: string
+                        description: Space between the bottom and the content.
+                      left:
+                        type: string
+                        description: Space between the left and the content.
+                auth:
+                  type: object
+                  description: Object containing `username` and `password` for accessing password-protected content.
+                  schema:
+                    properties:
+                      username:
+                        type: string
+                        description: Username value from the Basic Authentication scheme.
+                      password:
+                        type: string
+                        description: Password value from the Basic Authentication scheme.
+                cookies:
+                  type: array
+                  description: >-
+                    List of cookies you want to send along with the requests
+                    when loading the source. They must be provided as an array of
+                    objects with the following properties:
+                      - name
+                      - value
+                      - secure
+                      - http_only
+                http_headers:
+                  type: object
+                  description: List of HTTP headers that you can pass to the request.
+                  schema:
+                    properties:
+                header:
+                  type: object
+                  required:
+                    - source
+                  description: Defines a custom header.
+                  schema:
+                    properties:
+                      height:
+                        type: string
+                        description: A spacing between the header and the content.
+                      source:
+                        type: string
+                        description: >-
+                          Element to add in the header part of the document. You
+                          can use variables, indicated at the end of the
+                          document. PDFShift will automatically detect if it's
+                          an URL and load it, or an HTML data and charge it.
+                footer:
+                  type: object
+                  required:
+                    - source
+                  description: Defines a custom footer.
+                  schema:
+                    properties:
+                      height:
+                        type: string
+                        description: A spacing between the body and the footer.
+                      source:
+                        type: string
+                        description: >-
+                          Element to add in the footer part of the document. You
+                          can use variables, indicated at the end of the
+                          document. PDFShift will automatically detect if it's
+                          an URL and load it, or an HTML data and charge it.
+                protection:
+                  type: object
+                  required:
+                    - owner_password
+                    - user_password
+                  description: Will add restrictions on the PDF document.
+                  schema:
+                    properties:
+                      author:
+                        type: string
+                        description: Document's author name.
+                      no_copy:
+                        type: boolean
+                        description: When set to true, the possibility to copy any text will be disabled.
+                      no_modify:
+                        type: boolean
+                        description: When set to true, the possibility to modify the document will be disabled.
+                      no_print:
+                        type: boolean
+                        description: When set to true, printing will be disabled.
+                      owner_password:
+                        type: string
+                        description: >-
+                          A user who has the password will have unlimited access
+                          to the PDF, including changing the passwords and
+                          permission options.
+                      user_password:
+                        type: string
+                        description: >-
+                          A user who has the password will be able to view the
+                          document and perform operations allowed by the
+                          permission options.
+                watermark:
+                  type: object
+                  schema:
+                    properties:
+                      image:
+                        type: string
+                        description: >-
+                          Image file to add on top of the generated PDF.
+                          PDFShift will automatically detect if it's an URL or a
+                          data, and act accordingly. When sending as data, the
+                          value must be base64 encoded.
+                      text:
+                        type: string
+                        description: You can add a text as a watermark on your document easily.
+                      font_size:
+                        type: integer
+                        description: Size of the font, in points.
+                      font_family:
+                        type: string
+                        description: Font Family native to PDF. Allowed fonts are Helvetica, Times and Courier.
+                      font_color:
+                        type: string
+                        description: Color of the font, in hexadecimal.
+                      font_opacity:
+                        type: integer
+                        description: Opacity of the font, between 0 (invisible) and 100.
+                      font_bold:
+                        type: boolean
+                        description: Set the font in bold.
+                      font_italic:
+                        type: boolean
+                        description: Set the font in italic.
+                      rotate:
+                        type: integer
+                        description: Rotation of the watermark, in degrees.
+      responses:
+        '200':
+          description: Returns a PDF file.
+          headers:
+            X-Pdfshift-Processor:  
+              description: Which backend processor was used
+              schema:
+                type: string
+            X-Process-Time:  
+              description: Complete duration of the request (including parsing, generating the response)
+              schema:
+                type: integer
+            X-Response-Duration: 
+              description: Duration taken for the conversion (only)
+              schema:
+                type: integer
+            X-Response-Status-Code:  
+              description: Status code received from the given source (if URL)
+              schema:
+                type: string
+            X-Credits-Used:  
+              description: How many credits this conversion used
+              schema:
+                type: integer
+            X-Credits-Remaining: 
+              description: How many credits remains on your account
+              schema:
+                type: string
+            X-Request-Id:
+              description: The request ID. Could be useful for debugging
+              schema:
+                type: string
+          content:
+            application/json:
+        '400':
+          description: Bad request, returned when the request was not properly written.
+        '401':
+          description: Invalid API key given.
+        '403':
+          description: No remaining credits left.
+        '429':
+          description: You have been rate-limited.
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      description: HTTP Basic authentication
+      scheme: basic
+
+security:
+  http: []
