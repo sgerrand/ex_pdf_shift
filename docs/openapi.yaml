@@ -331,6 +331,34 @@ paths:
           description: No remaining credits left.
         '429':
           description: You have been rate-limited.
+  /credits/usage:
+    get:
+      responses:
+        '200':
+          description: Returns the current credits usage.
+          content:
+            application/json:
+              schema:
+                type: object
+                  properties:
+                    credits:
+                      type: object
+                      properties:
+                        base:
+                          type: integer
+                          example: 50000
+                        remaining:
+                          type: integer
+                          example: 49881
+                        total:
+                          type: integer
+                          example: 50000
+                        used:
+                          type: integer
+                          example: 119
+                    success:
+                      type: boolean
+                      example: true
 components:
   securitySchemes:
     basicAuth:
