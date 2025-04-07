@@ -325,12 +325,28 @@ paths:
             application/json:
         '400':
           description: Bad request, returned when the request was not properly written.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '401':
           description: Invalid API key given.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '403':
           description: No remaining credits left.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '429':
           description: You have been rate-limited.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /credits/usage:
     get:
       responses:
@@ -360,6 +376,19 @@ paths:
                       type: boolean
                       example: true
 components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+          example: Method GET not allowed for URL /v3/convert/pdf
+        code:
+          type: integer
+          example: 405
   securitySchemes:
     basicAuth:
       type: http
