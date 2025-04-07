@@ -404,6 +404,8 @@ components:
         error:
           type: string
           example: Method GET not allowed for URL /v3/convert/pdf
+        errors:
+          type: object
         code:
           type: integer
           example: 405
