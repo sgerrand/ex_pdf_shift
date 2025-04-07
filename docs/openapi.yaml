@@ -3,6 +3,12 @@ info:
   title: PDFShift API
   summary: Documentation for the PDFShift API
   description: Documentation for the PDFShift API
+  termsOfService: https://pdfshift.com/legal/terms
+  contact:
+    email: support@pdfshift.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
   - url: https://api.pdfshift.io/v3
