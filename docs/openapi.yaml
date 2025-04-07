@@ -387,6 +387,12 @@ paths:
                   success:
                     type: boolean
                     example: true
+        '400':
+          description: Bad request, returned when the request was not properly written.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
     ErrorResponse:
