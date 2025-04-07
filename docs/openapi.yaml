@@ -415,4 +415,5 @@ components:
       scheme: basic
 
 security:
-  http: []
+  - basicAuth: []
+  - {}
