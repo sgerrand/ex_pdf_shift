@@ -154,31 +154,29 @@ paths:
                 margin:
                   type: object
                   description: Empty spaces between the outer and the beginning of the content.
-                  schema:
-                    properties:
-                      top:
-                        type: string
-                        description: Space between the top and the content.
-                      right:
-                        type: string
-                        description: Space between the right and the content.
-                      bottom:
-                        type: string
-                        description: Space between the bottom and the content.
-                      left:
-                        type: string
-                        description: Space between the left and the content.
+                  properties:
+                    top:
+                      type: string
+                      description: Space between the top and the content.
+                    right:
+                      type: string
+                      description: Space between the right and the content.
+                    bottom:
+                      type: string
+                      description: Space between the bottom and the content.
+                    left:
+                      type: string
+                      description: Space between the left and the content.
                 auth:
                   type: object
                   description: Object containing `username` and `password` for accessing password-protected content.
-                  schema:
-                    properties:
-                      username:
-                        type: string
-                        description: Username value from the Basic Authentication scheme.
-                      password:
-                        type: string
-                        description: Password value from the Basic Authentication scheme.
+                  properties:
+                    username:
+                      type: string
+                      description: Username value from the Basic Authentication scheme.
+                    password:
+                      type: string
+                      description: Password value from the Basic Authentication scheme.
                 cookies:
                   type: array
                   description: >-
@@ -192,109 +190,106 @@ paths:
                 http_headers:
                   type: object
                   description: List of HTTP headers that you can pass to the request.
-                  schema:
-                    properties:
                 header:
                   type: object
                   required:
                     - source
                   description: Defines a custom header.
-                  schema:
-                    properties:
-                      height:
-                        type: string
-                        description: A spacing between the header and the content.
-                      source:
-                        type: string
-                        description: >-
-                          Element to add in the header part of the document. You
-                          can use variables, indicated at the end of the
-                          document. PDFShift will automatically detect if it's
-                          an URL and load it, or an HTML data and charge it.
+                  properties:
+                    height:
+                      type: string
+                      description: A spacing between the header and the content.
+                    source:
+                      type: string
+                      description: >-
+                        Element to add in the header part of the document. You
+                        can use variables, indicated at the end of the
+                        document. PDFShift will automatically detect if it's
+                        an URL and load it, or an HTML data and charge it.
                 footer:
                   type: object
                   required:
                     - source
                   description: Defines a custom footer.
-                  schema:
-                    properties:
-                      height:
-                        type: string
-                        description: A spacing between the body and the footer.
-                      source:
-                        type: string
-                        description: >-
-                          Element to add in the footer part of the document. You
-                          can use variables, indicated at the end of the
-                          document. PDFShift will automatically detect if it's
-                          an URL and load it, or an HTML data and charge it.
+                  properties:
+                    height:
+                      type: string
+                      description: A spacing between the body and the footer.
+                    source:
+                      type: string
+                      description: >-
+                        Element to add in the footer part of the document. You
+                        can use variables, indicated at the end of the
+                        document. PDFShift will automatically detect if it's
+                        an URL and load it, or an HTML data and charge it.
                 protection:
                   type: object
                   required:
                     - owner_password
                     - user_password
                   description: Will add restrictions on the PDF document.
-                  schema:
-                    properties:
-                      author:
-                        type: string
-                        description: Document's author name.
-                      no_copy:
-                        type: boolean
-                        description: When set to true, the possibility to copy any text will be disabled.
-                      no_modify:
-                        type: boolean
-                        description: When set to true, the possibility to modify the document will be disabled.
-                      no_print:
-                        type: boolean
-                        description: When set to true, printing will be disabled.
-                      owner_password:
-                        type: string
-                        description: >-
-                          A user who has the password will have unlimited access
-                          to the PDF, including changing the passwords and
-                          permission options.
-                      user_password:
-                        type: string
-                        description: >-
-                          A user who has the password will be able to view the
-                          document and perform operations allowed by the
-                          permission options.
+                  properties:
+                    author:
+                      type: string
+                      description: Document's author name.
+                    no_copy:
+                      type: boolean
+                      description: When set to true, the possibility to copy any text will be disabled.
+                    no_modify:
+                      type: boolean
+                      description: When set to true, the possibility to modify the document will be disabled.
+                    no_print:
+                      type: boolean
+                      description: When set to true, printing will be disabled.
+                    owner_password:
+                      type: string
+                      description: >-
+                        A user who has the password will have unlimited access
+                        to the PDF, including changing the passwords and
+                        permission options.
+                    user_password:
+                      type: string
+                      description: >-
+                        A user who has the password will be able to view the
+                        document and perform operations allowed by the
+                        permission options.
                 watermark:
                   type: object
-                  schema:
-                    properties:
-                      image:
-                        type: string
-                        description: >-
-                          Image file to add on top of the generated PDF.
-                          PDFShift will automatically detect if it's an URL or a
-                          data, and act accordingly. When sending as data, the
-                          value must be base64 encoded.
-                      text:
-                        type: string
-                        description: You can add a text as a watermark on your document easily.
-                      font_size:
-                        type: integer
-                        description: Size of the font, in points.
-                      font_family:
-                        type: string
-                        description: Font Family native to PDF. Allowed fonts are Helvetica, Times and Courier.
-                      font_color:
-                        type: string
-                        description: Color of the font, in hexadecimal.
-                      font_opacity:
-                        type: integer
-                        description: Opacity of the font, between 0 (invisible) and 100.
-                      font_bold:
-                        type: boolean
-                        description: Set the font in bold.
-                      font_italic:
-                        type: boolean
-                        description: Set the font in italic.
-                      rotate:
-                        type: integer
-                        description: Rotation of the watermark, in degrees.
+                  description: >-
+                    Add a watermark to the generated document. The watermark
+                    will always be placed at the center of the document.
+                  properties:
+                    image:
+                      type: string
+                      description: >-
+                        Image file to add on top of the generated PDF.
+                        PDFShift will automatically detect if it's an URL or a
+                        data, and act accordingly. When sending as data, the
+                        value must be base64 encoded.
+                    text:
+                      type: string
+                      description: You can add a text as a watermark on your document easily.
+                    font_size:
+                      type: integer
+                      description: Size of the font, in points.
+                    font_family:
+                      type: string
+                      description: Font Family native to PDF. Allowed fonts are Helvetica, Times and Courier.
+                    font_color:
+                      type: string
+                      description: Color of the font, in hexadecimal.
+                    font_opacity:
+                      type: integer
+                      description: Opacity of the font, between 0 (invisible) and 100.
+                    font_bold:
+                      type: boolean
+                      description: Set the font in bold.
+                    font_italic:
+                      type: boolean
+                      description: Set the font in italic.
+                    rotate:
+                      type: integer
+                      description: Rotation of the watermark, in degrees.
       responses:
         '200':
           description: Returns a PDF file.
@@ -362,25 +357,25 @@ paths:
             application/json:
               schema:
                 type: object
-                  properties:
-                    credits:
-                      type: object
-                      properties:
-                        base:
-                          type: integer
-                          example: 50000
-                        remaining:
-                          type: integer
-                          example: 49881
-                        total:
-                          type: integer
-                          example: 50000
-                        used:
-                          type: integer
-                          example: 119
-                    success:
-                      type: boolean
-                      example: true
+                properties:
+                  credits:
+                    type: object
+                    properties:
+                      base:
+                        type: integer
+                        example: 50000
+                      remaining:
+                        type: integer
+                        example: 49881
+                      total:
+                        type: integer
+                        example: 50000
+                      used:
+                        type: integer
+                        example: 119
+                  success:
+                    type: boolean
+                    example: true
 components:
   schemas:
     ErrorResponse:
