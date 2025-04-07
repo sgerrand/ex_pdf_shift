@@ -15,7 +15,11 @@ servers:
 paths:
   /convert/pdf:
     post:
+      summary: Converts a HTML document to PDF
       description: Converts a HTML document to PDF
+      operationId: createConvertPDF
+      externalDocs:
+        url: https://docs.pdfshift.io/#convert
       requestBody:
         required: true
         content:
@@ -353,9 +357,13 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
   /credits/usage:
     get:
+      summary: Returns the current credits usage.
+      description: Returns the current credits usage.
+      operationId: getCreditsUsage
+      externalDocs:
+        url: https://docs.pdfshift.io/#credits-usage
       responses:
         '200':
-          description: Returns the current credits usage.
           content:
             application/json:
               schema:
