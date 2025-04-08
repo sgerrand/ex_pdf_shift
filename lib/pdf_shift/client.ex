@@ -50,13 +50,36 @@ defmodule PDFShift.Client do
     end
   end
 
-  defp handle_response({:ok, %{status: status} = response}) when status in 200..299 do
+  defp handle_response({:ok, %{status: status, body: body} = response}) when status in 200..299 do
+    # For successful API calls, try to parse JSON body if it's a string
+    response =
+      if is_binary(body) do
+        case Jason.decode(body) do
+          {:ok, decoded} -> %{response | body: decoded}
+          _ -> response
+        end
+      else
+        response
+      end
+
     {:ok, response}
   end
 
   defp handle_response({:ok, %{status: _status, body: body}}) when is_map(body) do
     error_message = Map.get(body, "error", "Unknown error")
     {:error, error_message}
+  end
+
+  defp handle_response({:ok, %{status: _status, body: body}}) when is_binary(body) do
+    # Try to parse JSON body
+    case Jason.decode(body) do
+      {:ok, decoded_body} when is_map(decoded_body) ->
+        error_message = Map.get(decoded_body, "error", "Unknown error")
+        {:error, error_message}
+
+      _ ->
+        {:error, "Unknown error"}
+    end
   end
 
   defp handle_response({:error, exception}) do
