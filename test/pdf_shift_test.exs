@@ -1,36 +1,35 @@
 defmodule PDFShiftTest do
-  use ExUnit.Case
-  import Mox
+  use ExUnit.Case, async: true
+
+  import Mox, only: [expect: 3, verify_on_exit!: 1]
 
   alias PDFShift.MockClient
   alias PDFShift.Test.Helper
 
-  # Make sure mocks are verified when the test exits
   setup :verify_on_exit!
 
-  # Make the expected client module return our mock
   setup do
-    # Stub the client_module function to return our mock
-    stub_with(PDFShift.MockClient, PDFShift.Client)
-    :ok
+    success_convert_response = Helper.success_convert_response()
+    success_credits_response = Helper.success_credits_response()
+
+    [
+      success_convert_response: success_convert_response,
+      success_credits_response: success_credits_response
+    ]
   end
 
   describe "convert/3" do
-    test "converts URL to PDF" do
-      response = Helper.success_convert_response()
-
+    test "converts URL to PDF", %{success_convert_response: response} do
       MockClient
       |> expect(:post, fn _config, "/convert/pdf", payload, _opts ->
         assert payload.source == "https://example.com"
         {:ok, response}
       end)
 
-      assert {:ok, ^response} = PDFShift.convert("https://example.com")
+      assert PDFShift.convert("https://example.com") == {:ok, response}
     end
 
-    test "converts URL to PDF with options" do
-      response = Helper.success_convert_response()
-
+    test "converts URL to PDF with options", %{success_convert_response: response} do
       MockClient
       |> expect(:post, fn _config, "/convert/pdf", payload, _opts ->
         assert payload.source == "https://example.com"
@@ -39,16 +38,14 @@ defmodule PDFShiftTest do
         {:ok, response}
       end)
 
-      assert {:ok, ^response} =
-               PDFShift.convert(
-                 "https://example.com",
-                 %{landscape: true, format: "A4"}
-               )
+      assert PDFShift.convert(
+               "https://example.com",
+               %{landscape: true, format: "A4"}
+             ) == {:ok, response}
     end
 
-    test "converts HTML to PDF" do
+    test "converts HTML to PDF", %{success_convert_response: response} do
       html = "<html><body>Hello world</body></html>"
-      response = Helper.success_convert_response()
 
       MockClient
       |> expect(:post, fn _config, "/convert/pdf", payload, _opts ->
@@ -56,24 +53,21 @@ defmodule PDFShiftTest do
         {:ok, response}
       end)
 
-      assert {:ok, ^response} = PDFShift.convert(html)
+      assert PDFShift.convert(html) == {:ok, response}
     end
 
-    test "uses api_key from options" do
-      response = Helper.success_convert_response()
-
+    test "uses api_key from options", %{success_convert_response: response} do
       MockClient
       |> expect(:post, fn config, "/convert/pdf", _payload, _opts ->
         assert config.api_key == "custom_api_key"
         {:ok, response}
       end)
 
-      assert {:ok, ^response} =
-               PDFShift.convert(
-                 "https://example.com",
-                 %{},
-                 api_key: "custom_api_key"
-               )
+      assert PDFShift.convert(
+               "https://example.com",
+               %{},
+               api_key: "custom_api_key"
+             ) == {:ok, response}
     end
 
     test "handles errors" do
@@ -82,32 +76,28 @@ defmodule PDFShiftTest do
         {:error, "API error"}
       end)
 
-      assert {:error, "API error"} = PDFShift.convert("https://example.com")
+      assert PDFShift.convert("https://example.com") == {:error, "API error"}
     end
   end
 
   describe "credits_usage/1" do
-    test "gets credit usage information" do
-      response = Helper.success_credits_response()
-
+    test "gets credit usage information", %{success_credits_response: response} do
       MockClient
       |> expect(:get, fn _config, "/credits/usage", _opts ->
         {:ok, response}
       end)
 
-      assert {:ok, ^response} = PDFShift.credits_usage()
+      assert PDFShift.credits_usage() == {:ok, response}
     end
 
-    test "uses api_key from options" do
-      response = Helper.success_credits_response()
-
+    test "uses api_key from options", %{success_credits_response: response} do
       MockClient
       |> expect(:get, fn config, "/credits/usage", _opts ->
         assert config.api_key == "custom_api_key"
         {:ok, response}
       end)
 
-      assert {:ok, ^response} = PDFShift.credits_usage(api_key: "custom_api_key")
+      assert PDFShift.credits_usage(api_key: "custom_api_key") == {:ok, response}
     end
 
     test "handles errors" do
@@ -116,7 +106,7 @@ defmodule PDFShiftTest do
         {:error, "API error"}
       end)
 
-      assert {:error, "API error"} = PDFShift.credits_usage()
+      assert PDFShift.credits_usage() == {:error, "API error"}
     end
   end
 end

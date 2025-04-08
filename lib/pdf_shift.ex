@@ -112,6 +112,6 @@ defmodule PDFShift do
   end
 
   defp client_module do
-    PDFShift.Client
+    Application.get_env(:pdf_shift, :client_module, PDFShift.Client)
   end
 end
