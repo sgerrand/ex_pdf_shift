@@ -36,6 +36,7 @@ defmodule PDFShift.MixProject do
       {:req, "~> 0.5.0"},
       {:jason, "~> 1.4"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
+      {:expublish, "~> 2.5", only: :dev, runtime: false},
       {:mox, "~> 1.0", only: :test},
       {:bypass, "~> 2.1", only: :test}
     ]
