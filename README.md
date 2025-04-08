@@ -1,5 +1,8 @@
 # PDFShift
 
+[![Hex Version](https://img.shields.io/hexpm/v/pdf_shift.svg)](https://hex.pm/packages/pdf_shift)
+[![Hex Docs](https://img.shields.io/badge/docs-hexpm-blue.svg)](https://hexdocs.pm/pdf_shift/)
+
 An Elixir client for the [PDFShift API](https://pdfshift.io), which allows you to convert HTML to PDF.
 
 ## Installation
