@@ -1,6 +1,6 @@
 # PDFShift
 
-An Elixir library for the [PDFShift API](https://pdfshift.com/).
+An Elixir client for the [PDFShift API](https://pdfshift.io), which allows you to convert HTML to PDF.
 
 ## Installation
 
