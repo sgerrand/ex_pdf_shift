@@ -43,8 +43,8 @@ jobs:
       uses: actions/cache@v4
       with:
         path: deps
-        key: ${{ runner.os }}-publish-mix-${{ steps.setup-beam.outputs.otp }}-${{ steps.setup-beam.outputs.elixir }}-${{ hashFiles('**/mix.lock') }}
-        restore-keys: ${{ runner.os }}-publish-mix-${{ steps.setup-beam.outputs.otp }}-${{ steps.setup-beam.outputs.elixir }}-
+        key: ${{ runner.os }}-publish-mix-${{ steps.setup-beam.outputs.otp-version }}-${{ steps.setup-beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+        restore-keys: ${{ runner.os }}-publish-mix-${{ steps.setup-beam.outputs.otp-version }}-${{ steps.setup-beam.outputs.elixir-version }}-
 
     - name: Install deps
       run: mix deps.get
