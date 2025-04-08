@@ -1,5 +1,5 @@
 defmodule PDFShift.ClientTest do
-  use ExUnit.Case, async: false
+  use ExUnit.Case, async: true
 
   import Mox, only: [verify_on_exit!: 1]
 
