@@ -10,13 +10,13 @@ defmodule PDFShift.Client do
   """
   @impl true
   @spec get(PDFShift.Config.t(), String.t(), keyword()) :: {:ok, map()} | {:error, any()}
-  def get(config, endpoint, opts \\ []) do
+  def get(config, endpoint, client_opts \\ []) do
     url = "#{config.base_url}#{endpoint}"
 
     Req.get(url,
       auth: {:basic, "api:#{config.api_key}"},
-      receive_timeout: Keyword.get(opts, :timeout, 30_000),
-      retry: retry_options(),
+      receive_timeout: Keyword.get(client_opts, :timeout, 30_000),
+      retry: Keyword.get(client_opts, :retry, retry_options()),
       connect_options: [protocols: [:http1]],
       json: true
     )
@@ -28,14 +28,14 @@ defmodule PDFShift.Client do
   """
   @impl true
   @spec post(PDFShift.Config.t(), String.t(), map(), keyword()) :: {:ok, map()} | {:error, any()}
-  def post(config, endpoint, payload, opts \\ []) do
+  def post(config, endpoint, payload, client_opts \\ []) do
     url = "#{config.base_url}#{endpoint}"
 
     Req.post(url,
       auth: {:basic, "api:#{config.api_key}"},
       json: payload,
-      receive_timeout: Keyword.get(opts, :timeout, 60_000),
-      retry: retry_options(),
+      receive_timeout: Keyword.get(client_opts, :timeout, 60_000),
+      retry: Keyword.get(client_opts, :retry, retry_options()),
       connect_options: [protocols: [:http1]]
     )
     |> handle_response()

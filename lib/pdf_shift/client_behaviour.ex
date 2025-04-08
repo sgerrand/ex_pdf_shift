@@ -3,7 +3,13 @@ defmodule PDFShift.ClientBehaviour do
   Behaviour specification for PDFShift API client.
   """
 
-  @callback get(PDFShift.Config.t(), String.t(), keyword()) :: {:ok, map()} | {:error, any()}
-  @callback post(PDFShift.Config.t(), String.t(), map(), keyword()) ::
+  @callback get(config :: PDFShift.Config.t(), endpoint :: String.t(), client_opts :: keyword()) ::
+              {:ok, map()} | {:error, any()}
+  @callback post(
+              config :: PDFShift.Config.t(),
+              endpoint :: String.t(),
+              payload :: map(),
+              client_opts :: keyword()
+            ) ::
               {:ok, map()} | {:error, any()}
 end
