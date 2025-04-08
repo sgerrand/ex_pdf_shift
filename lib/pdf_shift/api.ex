@@ -27,12 +27,12 @@ defmodule PDFShift.API do
       {:ok, %{body: <<PDF binary data>>, status: 200, headers: [...]}}
 
   """
-  @spec convert(module(), Config.t(), String.t(), Types.convert_options()) ::
+  @spec convert(module(), Config.t(), String.t(), Types.convert_options(), keyword()) ::
           {:ok, map()} | {:error, any()}
-  def convert(client, config, source, options \\ %{}) do
+  def convert(client, config, source, options \\ %{}, client_opts \\ []) do
     payload = Map.put(options, :source, source)
 
-    client.post(config, "/convert/pdf", payload)
+    client.post(config, "/convert/pdf", payload, client_opts)
   end
 
   @doc """
@@ -66,8 +66,8 @@ defmodule PDFShift.API do
       }}
 
   """
-  @spec credits_usage(module(), Config.t()) :: {:ok, map()} | {:error, any()}
-  def credits_usage(client, config) do
-    client.get(config, "/credits/usage")
+  @spec credits_usage(module(), Config.t(), keyword()) :: {:ok, map()} | {:error, any()}
+  def credits_usage(client, config, client_opts \\ []) do
+    client.get(config, "/credits/usage", client_opts)
   end
 end
