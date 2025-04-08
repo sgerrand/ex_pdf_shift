@@ -24,8 +24,12 @@ defmodule PDFShift.ClientTest do
         Plug.Conn.resp(conn, 200, Jason.encode!(%{success: true, data: "test"}))
       end)
 
-      assert {:ok, %{status: 200, body: %{"success" => true, "data" => "test"}}} =
-               Client.get(config, "/test-endpoint")
+      {:ok, response} =
+        Client.get(config, "/test-endpoint", retry: fn _attempt, _error -> true end)
+
+      assert response.status == 200
+      assert response.body["success"] == true
+      assert response.body["data"] == "test"
     end
 
     test "handles error response", %{bypass: bypass, config: config} do
@@ -33,14 +37,16 @@ defmodule PDFShift.ClientTest do
         Plug.Conn.resp(conn, 401, Jason.encode!(%{success: false, error: "Invalid API key"}))
       end)
 
-      assert {:error, "Invalid API key"} = Client.get(config, "/test-endpoint")
+      assert {:error, "Invalid API key"} ==
+               Client.get(config, "/test-endpoint", retry: fn _attempt, _error -> false end)
     end
 
     test "handles network errors", %{config: config} do
-      assert {:error, %Mint.TransportError{}} =
+      assert {:error, %Req.TransportError{__exception__: true, reason: :nxdomain}} ==
                Client.get(
                  %{config | base_url: "http://non-existent-domain:12345"},
-                 "/test-endpoint"
+                 "/test-endpoint",
+                 retry: fn _attempt, _error -> false end
                )
     end
   end
@@ -54,8 +60,14 @@ defmodule PDFShift.ClientTest do
         Plug.Conn.resp(conn, 200, Jason.encode!(%{success: true, data: "test"}))
       end)
 
-      assert {:ok, %{status: 200, body: %{"success" => true, "data" => "test"}}} =
-               Client.post(config, "/test-endpoint", %{key: "value"})
+      {:ok, response} =
+        Client.post(config, "/test-endpoint", %{key: "value"},
+          retry: fn _attempt, _error -> true end
+        )
+
+      assert response.status == 200
+      assert response.body["success"] == true
+      assert response.body["data"] == "test"
     end
 
     test "handles error response", %{bypass: bypass, config: config} do
@@ -63,15 +75,17 @@ defmodule PDFShift.ClientTest do
         Plug.Conn.resp(conn, 401, Jason.encode!(%{success: false, error: "Invalid API key"}))
       end)
 
-      assert {:error, "Invalid API key"} = Client.post(config, "/test-endpoint", %{})
+      assert {:error, "Invalid API key"} ==
+               Client.post(config, "/test-endpoint", %{}, retry: fn _attempt, _error -> false end)
     end
 
     test "handles network errors", %{config: config} do
-      assert {:error, %Mint.TransportError{}} =
+      assert {:error, %Req.TransportError{__exception__: true, reason: :nxdomain}} ==
                Client.post(
                  %{config | base_url: "http://non-existent-domain:12345"},
                  "/test-endpoint",
-                 %{}
+                 %{},
+                 retry: fn _attempt, _error -> false end
                )
     end
   end

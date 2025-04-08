@@ -42,12 +42,12 @@ defmodule PDFShift.Client do
   end
 
   defp retry_options do
-    [
-      max_attempts: 3,
-      delay: 500,
-      retry_delay_function: fn attempt -> attempt * 1000 end,
-      retry_log_level: :warn
-    ]
+    if Application.get_env(:pdf_shift, :test_mode) do
+      # No retries in test mode to speed up tests
+      false
+    else
+      fn _attempt, _error -> true end
+    end
   end
 
   defp handle_response({:ok, %{status: status} = response}) when status in 200..299 do
