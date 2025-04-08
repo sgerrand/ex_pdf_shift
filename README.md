@@ -1,5 +1,6 @@
 # PDFShift
 
+[![Continuous Integration](https://github.com/sgerrand/ex_pdf_shift/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/sgerrand/ex_pdf_shift/actions/workflows/ci.yml)
 [![Hex Version](https://img.shields.io/hexpm/v/pdf_shift.svg)](https://hex.pm/packages/pdf_shift)
 [![Hex Docs](https://img.shields.io/badge/docs-hexpm-blue.svg)](https://hexdocs.pm/pdf_shift/)
 
