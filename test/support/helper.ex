@@ -45,9 +45,9 @@ defmodule PDFShift.Test.Helper do
       status: 200,
       body: %{
         "credits" => %{
-          "base" => 50000,
-          "remaining" => 49881,
-          "total" => 50000,
+          "base" => 50_000,
+          "remaining" => 49_881,
+          "total" => 50_000,
           "used" => 119
         },
         "success" => true
