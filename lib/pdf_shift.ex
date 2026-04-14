@@ -72,10 +72,9 @@ defmodule PDFShift do
   """
   @spec convert(String.t(), Types.convert_options(), keyword()) :: {:ok, map()} | {:error, any()}
   def convert(source, options \\ %{}, config_opts \\ []) do
-    config = Config.new(config_opts)
-    client = client_module()
-
-    API.convert(client, config, source, options)
+    with {:ok, config} <- Config.new(config_opts) do
+      API.convert(client_module(), config, source, options)
+    end
   end
 
   @doc """
@@ -105,10 +104,9 @@ defmodule PDFShift do
   """
   @spec credits_usage(keyword()) :: {:ok, map()} | {:error, any()}
   def credits_usage(config_opts \\ []) do
-    config = Config.new(config_opts)
-    client = client_module()
-
-    API.credits_usage(client, config)
+    with {:ok, config} <- Config.new(config_opts) do
+      API.credits_usage(client_module(), config)
+    end
   end
 
   defp client_module do
