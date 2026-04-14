@@ -102,7 +102,7 @@ defmodule PDFShift.Types do
           optional(:use_print) => boolean(),
           optional(:format) => String.t(),
           optional(:pages) => String.t(),
-          optional(:zoom) => integer(),
+          optional(:zoom) => number(),
           optional(:is_gdpr) => boolean(),
           optional(:is_hipaa) => boolean(),
           optional(:margin) => margin(),
