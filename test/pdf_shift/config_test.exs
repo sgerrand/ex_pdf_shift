@@ -15,18 +15,27 @@ defmodule PDFShift.ConfigTest do
       assert config.base_url == "https://custom-api.example.com"
       assert config.api_key == "test_api_key"
     end
-  end
 
-  describe "get_api_key_from_env/0" do
-    test "returns nil when environment variable is not set" do
-      System.delete_env("PDFSHIFT_API_KEY")
-      assert Config.get_api_key_from_env() == nil
+    test "reads api_key from PDFSHIFT_API_KEY environment variable" do
+      System.put_env("PDFSHIFT_API_KEY", "env_api_key")
+
+      try do
+        config = Config.new()
+        assert config.api_key == "env_api_key"
+      after
+        System.delete_env("PDFSHIFT_API_KEY")
+      end
     end
 
-    test "returns the API key from environment variable" do
+    test "explicit api_key option takes precedence over environment variable" do
       System.put_env("PDFSHIFT_API_KEY", "env_api_key")
-      assert Config.get_api_key_from_env() == "env_api_key"
-      System.delete_env("PDFSHIFT_API_KEY")
+
+      try do
+        config = Config.new(api_key: "explicit_key")
+        assert config.api_key == "explicit_key"
+      after
+        System.delete_env("PDFSHIFT_API_KEY")
+      end
     end
   end
 end

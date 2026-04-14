@@ -36,11 +36,7 @@ defmodule PDFShift.Config do
     }
   end
 
-  @doc """
-  Gets the API key from environment variables.
-  """
-  @spec get_api_key_from_env() :: String.t() | nil
-  def get_api_key_from_env do
+  defp get_api_key_from_env do
     System.get_env("PDFSHIFT_API_KEY")
   end
 end
