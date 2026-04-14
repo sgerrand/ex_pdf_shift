@@ -21,7 +21,9 @@ defmodule PDFShift.ClientTest do
   describe "get/3" do
     test "handles successful response", %{bypass: bypass, config: config} do
       Bypass.expect(bypass, "GET", "/test-endpoint", fn conn ->
-        Plug.Conn.resp(conn, 200, Jason.encode!(%{success: true, data: "test"}))
+        conn
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(200, Jason.encode!(%{success: true, data: "test"}))
       end)
 
       {:ok, response} =
@@ -34,7 +36,9 @@ defmodule PDFShift.ClientTest do
 
     test "handles error response", %{bypass: bypass, config: config} do
       Bypass.expect(bypass, "GET", "/test-endpoint", fn conn ->
-        Plug.Conn.resp(conn, 401, Jason.encode!(%{success: false, error: "Invalid API key"}))
+        conn
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(401, Jason.encode!(%{success: false, error: "Invalid API key"}))
       end)
 
       assert {:error, "Invalid API key"} ==
@@ -57,7 +61,9 @@ defmodule PDFShift.ClientTest do
         {:ok, body, conn} = Plug.Conn.read_body(conn)
         assert Jason.decode!(body) == %{"key" => "value"}
 
-        Plug.Conn.resp(conn, 200, Jason.encode!(%{success: true, data: "test"}))
+        conn
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(200, Jason.encode!(%{success: true, data: "test"}))
       end)
 
       {:ok, response} =
@@ -72,7 +78,9 @@ defmodule PDFShift.ClientTest do
 
     test "handles error response", %{bypass: bypass, config: config} do
       Bypass.expect(bypass, "POST", "/test-endpoint", fn conn ->
-        Plug.Conn.resp(conn, 401, Jason.encode!(%{success: false, error: "Invalid API key"}))
+        conn
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(401, Jason.encode!(%{success: false, error: "Invalid API key"}))
       end)
 
       assert {:error, "Invalid API key"} ==
