@@ -30,3 +30,6 @@ RELEASE.md
 
 # Claude Code local settings
 .claude/
+
+# API reference docs (local copies)
+*.pdf
