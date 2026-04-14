@@ -46,7 +46,7 @@ defmodule PDFShift.Client do
       # No retries in test mode to speed up tests
       false
     else
-      fn _attempt, _error -> true end
+      :safe_transient
     end
   end
 
