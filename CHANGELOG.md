@@ -4,12 +4,8 @@ All notable changes to this project will be documented in this file. See [Keep
 a CHANGELOG](http://keepachangelog.com/) for how to update this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.0.0](https://github.com/sgerrand/ex_pdf_shift/compare/v0.1.0...v1.0.0) (2026-04-14)
+## [0.2.0](https://github.com/sgerrand/ex_pdf_shift/compare/v0.1.0...v0.2.0) (2026-04-14)
 
-
-### ⚠ BREAKING CHANGES
-
-* make get_api_key_from_env/0 private ([#40](https://github.com/sgerrand/ex_pdf_shift/issues/40))
 
 ### Bug Fixes
 
