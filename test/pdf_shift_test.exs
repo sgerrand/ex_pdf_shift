@@ -26,7 +26,7 @@ defmodule PDFShiftTest do
         {:ok, response}
       end)
 
-      assert PDFShift.convert("https://example.com") == {:ok, response}
+      assert PDFShift.convert("https://example.com", %{}, api_key: "test_key") == {:ok, response}
     end
 
     test "converts URL to PDF with options", %{success_convert_response: response} do
@@ -40,7 +40,8 @@ defmodule PDFShiftTest do
 
       assert PDFShift.convert(
                "https://example.com",
-               %{landscape: true, format: "A4"}
+               %{landscape: true, format: "A4"},
+               api_key: "test_key"
              ) == {:ok, response}
     end
 
@@ -53,7 +54,12 @@ defmodule PDFShiftTest do
         {:ok, response}
       end)
 
-      assert PDFShift.convert(html) == {:ok, response}
+      assert PDFShift.convert(html, %{}, api_key: "test_key") == {:ok, response}
+    end
+
+    test "returns error when api_key is missing" do
+      System.delete_env("PDFSHIFT_API_KEY")
+      assert {:error, _reason} = PDFShift.convert("https://example.com")
     end
 
     test "uses api_key from options", %{success_convert_response: response} do
@@ -76,7 +82,8 @@ defmodule PDFShiftTest do
         {:error, "API error"}
       end)
 
-      assert PDFShift.convert("https://example.com") == {:error, "API error"}
+      assert PDFShift.convert("https://example.com", %{}, api_key: "test_key") ==
+               {:error, "API error"}
     end
   end
 
@@ -87,7 +94,12 @@ defmodule PDFShiftTest do
         {:ok, response}
       end)
 
-      assert PDFShift.credits_usage() == {:ok, response}
+      assert PDFShift.credits_usage(api_key: "test_key") == {:ok, response}
+    end
+
+    test "returns error when api_key is missing" do
+      System.delete_env("PDFSHIFT_API_KEY")
+      assert {:error, _reason} = PDFShift.credits_usage()
     end
 
     test "uses api_key from options", %{success_credits_response: response} do
@@ -106,7 +118,7 @@ defmodule PDFShiftTest do
         {:error, "API error"}
       end)
 
-      assert PDFShift.credits_usage() == {:error, "API error"}
+      assert PDFShift.credits_usage(api_key: "test_key") == {:error, "API error"}
     end
   end
 end
