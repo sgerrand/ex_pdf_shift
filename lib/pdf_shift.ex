@@ -39,7 +39,7 @@ defmodule PDFShift do
 
   Checking credit usage:
   ```elixir
-  PDFShift.credits()
+  PDFShift.credits_usage()
   ```
   """
 

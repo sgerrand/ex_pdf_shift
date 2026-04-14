@@ -71,7 +71,7 @@ PDFShift.convert("https://example.com", %{
 ### Check credit usage
 
 ```elixir
-PDFShift.credits()
+PDFShift.credits_usage()
 ```
 
 ## Available options
