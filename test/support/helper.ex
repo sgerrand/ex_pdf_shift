@@ -5,7 +5,7 @@ defmodule PDFShift.Test.Helper do
   Creates a test configuration.
   """
   def test_config do
-    PDFShift.Config.new(api_key: "test_api_key", base_url: "https://api.pdfshift.io/v3")
+    PDFShift.Config.new(api_key: "test_api_key", base_url: "https://api.pdfshift.test")
   end
 
   @doc """
