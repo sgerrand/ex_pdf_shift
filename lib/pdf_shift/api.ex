@@ -14,7 +14,7 @@ defmodule PDFShift.API do
     * `client` - The HTTP client module
     * `config` - The configuration struct
     * `source` - URL or HTML content to convert to PDF
-    * `options` - Conversion options (see `PDFShift.Types.convert_options/0`)
+    * `options` - Conversion options (see `t:PDFShift.Types.convert_options/0`)
 
   ## Returns
 
