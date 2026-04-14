@@ -10,6 +10,7 @@ An Elixir client for the [PDFShift API](https://pdfshift.io), which allows you t
 
 The package can be installed by adding `pdf_shift` to your list of dependencies in `mix.exs`:
 
+<!-- x-release-please-start-version -->
 ```elixir
 def deps do
   [
@@ -17,6 +18,7 @@ def deps do
   ]
 end
 ```
+<!-- x-release-please-end -->
 
 ## Configuration
 
