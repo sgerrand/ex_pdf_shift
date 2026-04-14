@@ -27,3 +27,6 @@ pdf_shift-*.tar
 
 # Ignore Expublish artefacts
 RELEASE.md
+
+# Claude Code local settings
+.claude/
