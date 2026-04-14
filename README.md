@@ -26,6 +26,7 @@ Set your API key using one of these methods:
 
 1. Set the `PDFSHIFT_API_KEY` environment variable
 2. Pass the API key in the options to each function
+
    ```elixir
    PDFShift.convert("https://example.com", %{}, api_key: "your_api_key")
    ```
@@ -110,9 +111,33 @@ The following options can be passed to the `convert/3` function:
 
 ## Development
 
-After checking out the repo, run `mix deps.get` to install dependencies. Then, run `mix test` to run the tests.
+### Setup
+
+Run the setup script to install system dependencies and register git hooks:
+
+```shell
+bin/setup
+```
+
+This installs [actionlint](https://github.com/rhysd/actionlint), [check-jsonschema](https://github.com/python-jsonschema/check-jsonschema), [lefthook](https://github.com/evilmartians/lefthook), and [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) via Homebrew, then registers the pre-commit hooks.
+
+Then install Elixir dependencies:
+
+```shell
+mix deps.get
+```
+
+### Commands
+
+| Task | Command |
+| ---- | ------- |
+| Run tests | `mix test` |
+| Run a single test file | `mix test test/pdf_shift/client_test.exs` |
+| Run a single test | `mix test test/pdf_shift/client_test.exs:42` |
+| Lint | `mix credo` |
+| Format | `mix format` |
+| Generate docs | `mix docs` |
 
 ## License
 
 The package is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-

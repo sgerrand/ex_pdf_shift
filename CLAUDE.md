@@ -6,7 +6,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `ex_pdf_shift` is an Elixir client library (hex package: `pdf_shift`) for the [PDFShift API](https://pdfshift.io), which converts HTML/URLs to PDF. It is a standalone library — not a Phoenix application.
 
-## Commands
+## Development
+
+### Setup
+
+Run `bin/setup` to install system dependencies (via Homebrew) and register git hooks:
+
+- [actionlint](https://github.com/rhysd/actionlint) — GitHub Actions linter
+- [check-jsonschema](https://github.com/python-jsonschema/check-jsonschema) — validates workflow, Dependabot, and release-please configs
+- [lefthook](https://github.com/evilmartians/lefthook) — git hook manager
+- [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) — Markdown linter
+
+Then run `mix deps.get` to install Elixir dependencies.
+
+### Commands
 
 - Install dependencies: `mix deps.get`
 - Run all tests: `mix test`
