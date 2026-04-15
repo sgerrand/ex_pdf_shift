@@ -15,7 +15,6 @@ defmodule PDFShift.MixProject do
 
       # Coverage
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [coveralls: :test, "coveralls.github": :test, "coveralls.lcov": :test],
 
       # Hex
       package: package(),
@@ -32,6 +31,16 @@ defmodule PDFShift.MixProject do
   def application do
     [
       extra_applications: [:logger]
+    ]
+  end
+
+  def cli do
+    [
+      preferred_envs: [
+        coveralls: :test,
+        "coveralls.github": :test,
+        "coveralls.lcov": :test
+      ]
     ]
   end
 
