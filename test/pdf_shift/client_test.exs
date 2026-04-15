@@ -53,6 +53,45 @@ defmodule PDFShift.ClientTest do
                  retry: fn _attempt, _error -> false end
                )
     end
+
+    test "handles binary error body containing JSON", %{bypass: bypass, config: config} do
+      Bypass.expect(bypass, "GET", "/test-endpoint", fn conn ->
+        conn
+        |> Plug.Conn.put_resp_content_type("text/plain")
+        |> Plug.Conn.resp(422, ~s({"error":"Conversion failed"}))
+      end)
+
+      assert {:error, "Conversion failed"} ==
+               Client.get(config, "/test-endpoint", retry: fn _attempt, _error -> false end)
+    end
+
+    test "handles binary error body that is not JSON", %{bypass: bypass, config: config} do
+      Bypass.expect(bypass, "GET", "/test-endpoint", fn conn ->
+        conn
+        |> Plug.Conn.put_resp_content_type("text/plain")
+        |> Plug.Conn.resp(503, "Service Unavailable")
+      end)
+
+      assert {:error, "Unknown error"} ==
+               Client.get(config, "/test-endpoint", retry: fn _attempt, _error -> false end)
+    end
+
+    test "uses safe_transient retry strategy outside of test mode", %{
+      bypass: bypass,
+      config: config
+    } do
+      Application.delete_env(:pdf_shift, :test_mode)
+      on_exit(fn -> Application.put_env(:pdf_shift, :test_mode, true) end)
+
+      Bypass.expect(bypass, "GET", "/test-endpoint", fn conn ->
+        conn
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(200, Jason.encode!(%{success: true}))
+      end)
+
+      assert {:ok, response} = Client.get(config, "/test-endpoint")
+      assert response.status == 200
+    end
   end
 
   describe "post/4" do
