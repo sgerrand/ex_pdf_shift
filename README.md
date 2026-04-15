@@ -15,7 +15,7 @@ The package can be installed by adding `pdf_shift` to your list of dependencies 
 ```elixir
 def deps do
   [
-    {:pdf_shift, "~> 0.2.0"}
+    {:pdf_shift, "~> 0.2.1"}
   ]
 end
 ```
