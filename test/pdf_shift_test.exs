@@ -9,12 +9,10 @@ defmodule PDFShiftTest do
   setup :verify_on_exit!
 
   setup do
-    success_convert_response = Helper.success_convert_response()
-    success_credits_response = Helper.success_credits_response()
-
     [
-      success_convert_response: success_convert_response,
-      success_credits_response: success_credits_response
+      success_convert_response: Helper.success_convert_response(),
+      success_credits_response: Helper.success_credits_response(),
+      error_response: Helper.error_response()
     ]
   end
 
@@ -76,14 +74,14 @@ defmodule PDFShiftTest do
              ) == {:ok, response}
     end
 
-    test "handles errors" do
+    test "handles errors", %{error_response: error_response} do
       MockClient
       |> expect(:post, fn _config, "/convert/pdf", _payload, _opts ->
-        {:error, "API error"}
+        {:error, error_response}
       end)
 
       assert PDFShift.convert("https://example.com", %{}, api_key: "test_key") ==
-               {:error, "API error"}
+               {:error, error_response}
     end
   end
 
@@ -112,13 +110,13 @@ defmodule PDFShiftTest do
       assert PDFShift.credits_usage(api_key: "custom_api_key") == {:ok, response}
     end
 
-    test "handles errors" do
+    test "handles errors", %{error_response: error_response} do
       MockClient
       |> expect(:get, fn _config, "/credits/usage", _opts ->
-        {:error, "API error"}
+        {:error, error_response}
       end)
 
-      assert PDFShift.credits_usage(api_key: "test_key") == {:error, "API error"}
+      assert PDFShift.credits_usage(api_key: "test_key") == {:error, error_response}
     end
   end
 end

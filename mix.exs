@@ -13,6 +13,9 @@ defmodule PDFShift.MixProject do
       deps: deps(),
       elixirc_paths: elixirc_paths(Mix.env()),
 
+      # Coverage
+      test_coverage: [tool: ExCoveralls],
+
       # Hex
       package: package(),
       description: "Elixir client for the PDFShift API",
@@ -31,6 +34,16 @@ defmodule PDFShift.MixProject do
     ]
   end
 
+  def cli do
+    [
+      preferred_envs: [
+        coveralls: :test,
+        "coveralls.github": :test,
+        "coveralls.lcov": :test
+      ]
+    ]
+  end
+
   defp deps do
     [
       {:req, "~> 0.5.0"},
@@ -39,7 +52,8 @@ defmodule PDFShift.MixProject do
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:expublish, "~> 2.5", only: :dev, runtime: false},
       {:mox, "~> 1.0", only: :test},
-      {:bypass, "~> 2.1", only: :test}
+      {:bypass, "~> 2.1", only: :test},
+      {:excoveralls, "~> 0.18", only: :test}
     ]
   end
 
