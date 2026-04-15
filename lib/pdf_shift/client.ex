@@ -13,12 +13,15 @@ defmodule PDFShift.Client do
   def get(config, endpoint, client_opts \\ []) do
     url = "#{config.base_url}#{endpoint}"
 
-    Req.get(url,
-      auth: {:basic, "api:#{config.api_key}"},
-      receive_timeout: Keyword.get(client_opts, :timeout, 30_000),
-      retry: Keyword.get(client_opts, :retry, retry_options()),
-      connect_options: [protocols: [:http1]],
-      json: true
+    Req.get(
+      url,
+      [
+        auth: {:basic, "api:#{config.api_key}"},
+        receive_timeout: Keyword.get(client_opts, :timeout, 30_000),
+        retry: Keyword.get(client_opts, :retry, retry_options()),
+        connect_options: [protocols: [:http1]],
+        json: true
+      ] ++ retry_delay_opts(client_opts)
     )
     |> handle_response()
   end
@@ -31,12 +34,15 @@ defmodule PDFShift.Client do
   def post(config, endpoint, payload, client_opts \\ []) do
     url = "#{config.base_url}#{endpoint}"
 
-    Req.post(url,
-      auth: {:basic, "api:#{config.api_key}"},
-      json: payload,
-      receive_timeout: Keyword.get(client_opts, :timeout, 60_000),
-      retry: Keyword.get(client_opts, :retry, retry_options()),
-      connect_options: [protocols: [:http1]]
+    Req.post(
+      url,
+      [
+        auth: {:basic, "api:#{config.api_key}"},
+        json: payload,
+        receive_timeout: Keyword.get(client_opts, :timeout, 60_000),
+        retry: Keyword.get(client_opts, :retry, retry_options()),
+        connect_options: [protocols: [:http1]]
+      ] ++ retry_delay_opts(client_opts)
     )
     |> handle_response()
   end
@@ -47,6 +53,20 @@ defmodule PDFShift.Client do
       false
     else
       :safe_transient
+    end
+  end
+
+  # In test mode, force retry_delay to 0 so any retry-enabled test doesn't wait on backoff.
+  # Outside test mode, omit the option entirely and let Req use its default backoff.
+  defp retry_delay_opts(client_opts) do
+    if Keyword.has_key?(client_opts, :retry_delay) do
+      [retry_delay: Keyword.fetch!(client_opts, :retry_delay)]
+    else
+      if Application.get_env(:pdf_shift, :test_mode) do
+        [retry_delay: 0]
+      else
+        []
+      end
     end
   end
 

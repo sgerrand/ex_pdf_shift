@@ -27,7 +27,7 @@ defmodule PDFShift.ClientTest do
       end)
 
       {:ok, response} =
-        Client.get(config, "/test-endpoint", retry: fn _attempt, _error -> true end)
+        Client.get(config, "/test-endpoint", retry: false)
 
       assert response.status == 200
       assert response.body["success"] == true
@@ -106,9 +106,7 @@ defmodule PDFShift.ClientTest do
       end)
 
       {:ok, response} =
-        Client.post(config, "/test-endpoint", %{key: "value"},
-          retry: fn _attempt, _error -> true end
-        )
+        Client.post(config, "/test-endpoint", %{key: "value"}, retry: false)
 
       assert response.status == 200
       assert response.body["success"] == true
