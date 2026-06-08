@@ -1,0 +1,50 @@
+[lint]
+respect-ignore = true
+respect-gitignore = true
+# Exclude generated/vendored files
+exclude = ["**/CHANGELOG.md"]
+# Default rule set minus:
+#   MD013 (line length)       — badge URLs and long code examples exceed 80 chars
+rules = [
+  "MD001",
+  "MD002",
+  "MD003",
+  "MD004",
+  "MD005",
+  "MD006",
+  "MD007",
+  "MD009",
+  "MD010",
+  "MD012",
+  "MD014",
+  "MD018",
+  "MD019",
+  "MD020",
+  "MD021",
+  "MD022",
+  "MD023",
+  "MD024",
+  "MD025",
+  "MD026",
+  "MD027",
+  "MD028",
+  "MD029",
+  "MD030",
+  "MD031",
+  "MD032",
+  "MD033",
+  "MD034",
+  "MD035",
+  "MD036",
+  "MD037",
+  "MD038",
+  "MD039",
+  "MD040",
+  "MD041",
+  "MD046",
+  "MD047",
+]
+
+# Installation steps are sequential (1, 2, ...), not all "1."
+[lint.md029]
+style = "ordered"

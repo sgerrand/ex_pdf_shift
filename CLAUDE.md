@@ -15,7 +15,7 @@ Run `bin/setup` to install system dependencies (via Homebrew) and register git h
 - [actionlint](https://github.com/rhysd/actionlint) — GitHub Actions linter
 - [check-jsonschema](https://github.com/python-jsonschema/check-jsonschema) — validates workflow, Dependabot, and release-please configs
 - [lefthook](https://github.com/evilmartians/lefthook) — git hook manager
-- [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) — Markdown linter
+- [mado](https://github.com/akiomik/mado) — Markdown linter
 
 Then run `mix deps.get` to install Elixir dependencies.
 
