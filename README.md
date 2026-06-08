@@ -12,6 +12,7 @@ An Elixir client for the [PDFShift API](https://pdfshift.io), which allows you t
 The package can be installed by adding `pdf_shift` to your list of dependencies in `mix.exs`:
 
 <!-- x-release-please-start-version -->
+
 ```elixir
 def deps do
   [
@@ -19,6 +20,7 @@ def deps do
   ]
 end
 ```
+
 <!-- x-release-please-end -->
 
 ## Configuration
@@ -122,7 +124,7 @@ Run the setup script to install system dependencies and register git hooks:
 bin/setup
 ```
 
-This installs [actionlint](https://github.com/rhysd/actionlint), [check-jsonschema](https://github.com/python-jsonschema/check-jsonschema), [lefthook](https://github.com/evilmartians/lefthook), and [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) via Homebrew, then registers the pre-commit hooks.
+This installs [actionlint](https://github.com/rhysd/actionlint), [check-jsonschema](https://github.com/python-jsonschema/check-jsonschema), [lefthook](https://github.com/evilmartians/lefthook), and [mado](https://github.com/akiomik/mado) via Homebrew, then registers the pre-commit hooks.
 
 Then install Elixir dependencies:
 
