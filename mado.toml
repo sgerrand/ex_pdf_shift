@@ -5,7 +5,6 @@ respect-gitignore = true
 exclude = ["**/CHANGELOG.md"]
 # Default rule set minus:
 #   MD013 (line length)       — badge URLs and long code examples exceed 80 chars
-#   MD024 (duplicate headings) — CHANGELOG repeats section names across versions
 rules = [
   "MD001",
   "MD002",
@@ -24,6 +23,7 @@ rules = [
   "MD021",
   "MD022",
   "MD023",
+  "MD024",
   "MD025",
   "MD026",
   "MD027",
