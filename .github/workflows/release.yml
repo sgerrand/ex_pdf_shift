@@ -17,5 +17,3 @@ jobs:
         with:
           client-id: ${{ secrets.RELEASE_MATE_CLIENT_ID }}
           app-private-key: ${{ secrets.RELEASE_MATE_PRIVATE_KEY }}
-          config-file: release-please-config.json
-          manifest-file: .release-please-manifest.json
