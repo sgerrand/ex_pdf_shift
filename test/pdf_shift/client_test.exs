@@ -21,6 +21,9 @@ defmodule PDFShift.ClientTest do
   describe "get/3" do
     test "handles successful response", %{bypass: bypass, config: config} do
       Bypass.expect(bypass, "GET", "/test-endpoint", fn conn ->
+        {:ok, body, conn} = Plug.Conn.read_body(conn)
+        assert body == ""
+
         conn
         |> Plug.Conn.put_resp_content_type("application/json")
         |> Plug.Conn.resp(200, Jason.encode!(%{success: true, data: "test"}))

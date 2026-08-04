@@ -19,8 +19,7 @@ defmodule PDFShift.Client do
         auth: {:basic, "api:#{config.api_key}"},
         receive_timeout: Keyword.get(client_opts, :timeout, 30_000),
         retry: Keyword.get(client_opts, :retry, retry_options()),
-        connect_options: [protocols: [:http1]],
-        json: true
+        connect_options: [protocols: [:http1]]
       ] ++ retry_delay_opts(client_opts)
     )
     |> handle_response()
