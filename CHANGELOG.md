@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file. See [Keep
 a CHANGELOG](http://keepachangelog.com/) for how to update this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.2.4](https://github.com/sgerrand/ex_pdf_shift/compare/v0.2.3...v0.2.4) (2026-08-04)
+
+
+### Bug Fixes
+
+* **deps:** bump req from 0.6.2 to 0.7.1 ([#72](https://github.com/sgerrand/ex_pdf_shift/issues/72)) ([fc54fe8](https://github.com/sgerrand/ex_pdf_shift/commit/fc54fe8764d747158abc3d7f9f1035b0a1c595e3))
+* send GET requests without a body ([#74](https://github.com/sgerrand/ex_pdf_shift/issues/74)) ([2452e6a](https://github.com/sgerrand/ex_pdf_shift/commit/2452e6a037b9347ae384caeeab1acd9d6ecb1071))
+
 ## [0.2.3](https://github.com/sgerrand/ex_pdf_shift/compare/v0.2.2...v0.2.3) (2026-07-07)
 
 
