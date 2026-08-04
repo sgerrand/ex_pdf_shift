@@ -26,7 +26,7 @@ jobs:
       MIX_ENV: dev
 
     steps:
-    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         persist-credentials: false
     - name: Set up Elixir
@@ -57,11 +57,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         persist-credentials: false
     - name: Lint Markdown
-      uses: akiomik/mado@9b5cb3a1d234ddbacad4dd811aaa2a1e671d5306 # v0.3.0
+      uses: akiomik/mado@177695b4d2cd6b107f881a8e91067cc7588fb129 # v0.3.1
 
   test:
     name: Tests [Elixir ${{ matrix.elixir }} / OTP ${{ matrix.otp }}]
@@ -95,7 +95,7 @@ jobs:
       MIX_ENV: test
 
     steps:
-    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         persist-credentials: false
     - name: Set up Elixir
@@ -138,7 +138,7 @@ jobs:
       run: mix coveralls.lcov --warnings-as-errors
       if: ${{ matrix.lint }}
     - name: Post coverage to Coveralls
-      uses: coverallsapp/github-action@5cbfd81b66ca5d10c19b062c04de0199c215fb6e # v2.3.7
+      uses: coverallsapp/github-action@8d6379e14d29928660c4ba802d8e85393440b329 # v2.3.8
       if: ${{ matrix.lint }}
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
