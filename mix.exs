@@ -2,7 +2,7 @@ defmodule PDFShift.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/sgerrand/ex_pdf_shift"
-  @version "0.2.5"
+  @version "0.2.6"
 
   def project do
     [
